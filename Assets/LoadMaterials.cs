@@ -32,11 +32,6 @@ public class LoadMaterials : ScriptableWizard
         Sprite s;
         Camera camera;
         GameObject prefabCamera;
-        PlayMakerFSM fsm;
-        HutongGames.PlayMaker.FsmMaterial playMat;
-        HutongGames.PlayMaker.FsmGameObject playTarg;
-        HutongGames.PlayMaker.FsmBool playBool;
-        HutongGames.PlayMaker.FsmBool playRecursive;
 
         // recherche les materiaux
         materials = researchMaterials();
@@ -69,32 +64,6 @@ public class LoadMaterials : ScriptableWizard
             // definir son image a partir du screenshot
             img = button.GetComponentInChildren<Image>();
             img.sprite = s;
-
-            // modifie les variables FSM du bouton
-            fsm = button.GetComponent<PlayMakerFSM>();
-            if (fsm != null)
-            {
-                playMat = fsm.FsmVariables.FindFsmMaterial("Material");
-                if (playMat != null)
-                    playMat.Value = materials[i];
-                else Debug.LogError("Aucune variable playmaker <Material> trouvé dans le prefab.");
-
-                playTarg = fsm.FsmVariables.FindFsmGameObject("Target");
-                if (playTarg != null)
-                    playTarg.Value = target;
-                else Debug.LogError("Aucune variable playmaker <Targets> trouvé dans le prefab.");
-
-                playBool = fsm.FsmVariables.FindFsmBool("ModifyChild");
-                if (playBool != null)
-                    playBool.Value = ModifyChild;
-                else Debug.LogError("Aucune variable playmaker <ModifyChild> trouvé dans le prefab.");
-
-                playRecursive = fsm.FsmVariables.FindFsmBool("Recursive");
-                if (playRecursive != null)
-                    playRecursive.Value = Recursive;
-                else Debug.LogError("Aucune variable playmaker <Recursive> trouvé dans le prefab.");
-            }
-            else Debug.LogError("Aucun component PlayMaker trouvé sur le prefab.");
         }
 
         DestroyImmediate(prefabCamera);
